@@ -1,0 +1,210 @@
+<!DOCTYPE html><html lang="en"><head>
+  
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Scroll Image Slider in JavaScript</title>
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; font-family: 'Inter', sans-serif; }
+        .vertical-slider-wrapper {
+          position: relative;
+          width: 100vw;
+          height: 100vh;
+        }
+        .vertical-slider-container {
+          width: 100%;
+          height: 100%;
+          transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        .v-slide {
+          width: 100%;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+        }
+        .v-content { text-align: center; }
+        .v-content h2 { font-size: 4rem; margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .v-content p { font-size: 1.5rem; opacity: 0.8; }
+        .v-controls {
+          position: absolute;
+          right: 30px;
+          top: 50%;
+          transform: translateY(-50%);
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        .v-btn {
+          background: rgba(255,255,255,0.3);
+          border: none;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          color: white;
+          font-size: 24px;
+          cursor: pointer;
+          transition: 0.3s;
+          backdrop-filter: blur(5px);
+        }
+        .v-btn:hover { background: white; color: black; }
+    </style>
+
+            <meta name="description" content="A beautiful component imported via Developer Studio AI.">
+            <meta name="robots" content="index, follow">
+            <meta property="og:title" content="Vertical Scroll Image Slider in JavaScript">
+            <meta property="og:description" content="A beautiful component imported via Developer Studio AI.">
+            <meta property="og:image" content="https://codescompiler.com/images/posts/vertical-scroll-image-slider.png">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content="Vertical Scroll Image Slider in JavaScript">
+            <meta name="twitter:description" content="A beautiful component imported via Developer Studio AI.">
+            <meta name="twitter:image" content="https://codescompiler.com/images/posts/vertical-scroll-image-slider.png">
+          </head>
+<body>
+
+<!-- ── CODESCOMPILER DEMO HEADER ── -->
+<style>
+  #cc-demo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: 48px;
+    background: #1a1b26;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: white;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999999;
+  }
+  #cc-demo-header a { text-decoration: none; color: white; }
+  .cc-logo { font-size: 14px; font-weight: 900; }
+  .cc-logo span { color: #04aa6d; }
+  .cc-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.12); margin: 0 12px; }
+  .cc-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.65); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cc-actions { display: flex; gap: 8px; }
+  .cc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: rgba(255,255,255,0.7);
+  }
+  .cc-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+  .cc-btn svg { width: 14px; height: 14px; }
+  @media (max-width: 600px) {
+    .cc-title { display: none; }
+    .cc-btn span { display: none; }
+  }
+</style>
+<header id="cc-demo-header">
+  <div style="display: flex; align-items: center; overflow: hidden;">
+    <a href="https://codescompiler.com" class="cc-logo" target="_blank" rel="dofollow"><span>Codes</span>Compiler</a>
+    <div class="cc-sep"></div>
+    <h1 class="cc-title" title="Vertical Scroll Image Slider in JavaScript" style="margin: 0; font-size: 13px; font-weight: 600;">📺 Vertical Scroll Image Slider in JavaScript</h1>
+  </div>
+  <div class="cc-actions">
+    <a href="https://codescompiler.com/blog/js-infinite-scroll" class="cc-btn" target="_blank" rel="dofollow" title="Read the full post">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+      <span>Back to Post</span>
+    </a>
+    <a href="index.html" class="cc-btn" target="_blank" download="js-infinite-scroll.html" title="Download source file">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+      <span>Download</span>
+    </a>
+    <button onclick="document.getElementById('cc-demo-header').style.display='none'" class="cc-btn" title="Hide header for fullscreen view">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l5-5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+      <span>Fullscreen</span>
+    </button>
+  </div>
+</header>
+<!-- ================================== -->
+
+    <div class="vertical-slider-wrapper">
+      <div class="vertical-slider-container" id="v-slider">
+        <div class="v-slide" style="background-color: #ff7675;">
+          <div class="v-content">
+            <h2>Slide One</h2>
+            <p>Scroll down or use buttons</p>
+          </div>
+        </div>
+        <div class="v-slide" style="background-color: #74b9ff;">
+          <div class="v-content">
+            <h2>Slide Two</h2>
+            <p>Vertical transitions</p>
+          </div>
+        </div>
+        <div class="v-slide" style="background-color: #55efc4;">
+          <div class="v-content">
+            <h2>Slide Three</h2>
+            <p>Smooth snapping</p>
+          </div>
+        </div>
+        <div class="v-slide" style="background-color: #a29bfe;">
+          <div class="v-content">
+            <h2>Slide Four</h2>
+            <p>End of slider</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="v-controls">
+        <button class="v-btn" id="v-up">↑</button>
+        <button class="v-btn" id="v-down">↓</button>
+      </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('v-slider');
+            const slides = document.querySelectorAll('.v-slide');
+            const upBtn = document.getElementById('v-up');
+            const downBtn = document.getElementById('v-down');
+            
+            if(!container || !slides.length) return;
+
+            let currentIndex = 0;
+            let isAnimating = false;
+
+            function goToSlide(index) {
+                if(isAnimating) return;
+                isAnimating = true;
+                
+                currentIndex = index;
+                container.style.transform = `translateY(-${currentIndex * 100}vh)`;
+                
+                setTimeout(() => { isAnimating = false; }, 600);
+            }
+
+            downBtn.addEventListener('click', () => {
+                if (currentIndex < slides.length - 1) goToSlide(currentIndex + 1);
+            });
+
+            upBtn.addEventListener('click', () => {
+                if (currentIndex > 0) goToSlide(currentIndex - 1);
+            });
+
+            window.addEventListener('wheel', (e) => {
+                if (e.deltaY > 0) {
+                    if (currentIndex < slides.length - 1) goToSlide(currentIndex + 1);
+                } else {
+                    if (currentIndex > 0) goToSlide(currentIndex - 1);
+                }
+            });
+        });
+    </script>
+
+
+</body></html>
